@@ -1,0 +1,32 @@
+{
+  "name": "marama",
+  "version": "0.0.1",
+  "description": "A simple calendar component",
+  "main": "index.js",
+  "scripts": {
+    "build": "node lib/build.js",
+    "test": "standard",
+    "lint": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mixmix/marama.git"
+  },
+  "keywords": [
+    "calendar",
+    "month"
+  ],
+  "author": "mixmix",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mixmix/marama/issues"
+  },
+  "homepage": "https://github.com/mixmix/marama#readme",
+  "dependencies": {
+    "mutant": "^3.22.1"
+  },
+  "devDependencies": {
+    "micro-css": "^2.0.1",
+    "standard": "^11.0.1"
+  }
+}

@@ -1,0 +1,12 @@
+.Marama { --day-radius: 6px; --day-border-radius: 2px; --day-gap: 1px; width: calc(7 * 2 * var(--day-radius) +  6 * var(--day-gap)); }
+.Marama > div.month-name { font-size: 20px; font-weight: bold; text-align: left; cursor: pointer; margin-bottom: 5px; }
+.Marama > div.days { grid-gap: var(--day-gap); justify-content: start; align-content: start; }
+.MaramaDay { width: calc(2 * var(--day-radius)); height: calc(2 * var(--day-radius)); cursor: pointer; border-radius: var(--day-border-radius); display: flex; justify-content: center; align-items: center; }
+.MaramaDay.-past { background: hsl(0, 0%, 20%); }
+.MaramaDay.-future { background: hsl(0, 0%, 80%); }
+.MaramaDay.-range { background: deeppink; }
+.MaramaDay.-range.-future { background: deepskyblue; }
+.MaramaDay.-events { /* border-radius: var(--day-radius) */; /* background: hsla(277, 57%, 45%, 1) */; }
+.MaramaDay.-events.-attending > div.dot { background: #fff; width: 6px; height: 6px; border: none; }
+.MaramaDay.-events > div.dot { background: none; width: 4px; height: 4px; border: 1px solid #fff; border-radius: 8px; }
+.MaramaDayName { color: hsl(0, 0%, 40%); font-family: arial; font-size: calc(2 * var(--day-radius) - 3px); /* line-height: calc(2 * var(--day-radius) - 2px) */; width: calc(2 * var(--day-radius)); height: calc(2 * var(--day-radius)); display: flex; align-items: center; justify-content: center; }
