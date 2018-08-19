@@ -1,29 +1,4 @@
-Marama {
-  --day-radius: 6px
-  --day-border-radius: 2px
-  --day-gap: 1px
-
-  width: calc(7 * 2 * var(--day-radius) +  6 * var(--day-gap))
-  /* max of 6 weeks + day labels, with gaps between each */
-
-  div.month-name {
-    font-size: 20px
-    font-weight: bold
-    text-align: left
-    cursor: pointer
-    margin-bottom: 5px
-  }
-
-  div.days {
-    grid-gap: var(--day-gap)
-    justify-content: start
-    align-content: start
-
-    div.MaramaDay {}
-  }
-}
-
-MaramaDay {
+MaramaDayTile {
   width: calc(2 * var(--day-radius))
   height: calc(2 * var(--day-radius))
   cursor: pointer
@@ -74,18 +49,4 @@ MaramaDay {
       }
     }
   }
-}
-
-MaramaDayName {
-  color: hsl(0, 0%, 40%)
-  font-family: arial
-  font-size: calc(2 * var(--day-radius) - 3px)
-  /* line-height: calc(2 * var(--day-radius) - 2px) */
-
-  width: calc(2 * var(--day-radius))
-  height: calc(2 * var(--day-radius))
-
-  display: flex
-  align-items: center
-  justify-content: center
 }

@@ -1,0 +1,13 @@
+MaramaDayName {
+  color: hsl(0, 0%, 40%)
+  font-family: arial
+  font-size: calc(2 * var(--day-radius) - 3px)
+  /* line-height: calc(2 * var(--day-radius) - 2px) */
+
+  width: calc(2 * var(--day-radius))
+  height: calc(2 * var(--day-radius))
+
+  display: flex
+  align-items: center
+  justify-content: center
+}

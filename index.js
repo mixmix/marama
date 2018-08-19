@@ -90,9 +90,9 @@ module.exports = function Marama (opts = {}) {
       }
     }
 
-    if (!eventsOnDay.length) return h('MaramaDay', opts)
+    if (!eventsOnDay.length) return h('MaramaDayTile', opts)
 
-    return h('MaramaDay', opts, [
+    return h('MaramaDayTile', opts, [
       // TODO add awareness of whether I'm going to events
       // TODO try a FontAwesome circle
       h('div.dot', [
