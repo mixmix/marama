@@ -3,13 +3,13 @@ const h = require('mutant/h')
 const MONTH_NAMES = [ 'Ja', 'Fe', 'Ma', 'Ap', 'Ma', 'Ju', 'Ju', 'Au', 'Se', 'Oc', 'No', 'De' ]
 const DAYS = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ]
 
-module.exports = function Marama (opts) {
+module.exports = function Marama (opts = {}) {
   const d = startOfDay()
   const {
     year = d.getFullYear(),
     month = d.getMonth() + 1, // month number (common defn)
     today = d,
-    events,
+    events = [],
     range,
     setRange = () => {},
     monthNames = MONTH_NAMES

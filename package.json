@@ -4,7 +4,7 @@
   "description": "A simple calendar component",
   "main": "index.js",
   "scripts": {
-    "build": "node lib/build.js",
+    "build": "node lib/styles-write.js",
     "test": "standard",
     "lint": "standard --fix"
   },
@@ -26,6 +26,8 @@
     "mutant": "^3.22.1"
   },
   "devDependencies": {
+    "electro": "^2.1.1",
+    "electron": "^2.0.7",
     "micro-css": "^2.0.1",
     "standard": "^11.0.1"
   }
