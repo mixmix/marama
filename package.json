@@ -1,6 +1,6 @@
 {
   "name": "marama",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple calendar component",
   "main": "index.js",
   "scripts": {
