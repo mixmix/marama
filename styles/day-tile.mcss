@@ -1,9 +1,9 @@
 MaramaDayTile {
-  width: calc(2 * var(--day-radius))
-  height: calc(2 * var(--day-radius))
+  width: calc(2 * var(--tile-radius))
+  height: calc(2 * var(--tile-radius))
   cursor: pointer
 
-  border-radius: var(--day-border-radius)
+  border-radius: 2px
 
   display: flex
   justify-content: center
@@ -26,25 +26,19 @@ MaramaDayTile {
   }
 
   -events {
-    /* border-radius: var(--day-radius) */
-    /* background: hsla(277, 57%, 45%, 1) */
-
     div.dot {
       background: none
-      width: 4px
-      height: 4px
-      border: 1px solid #fff
-      border-radius: 8px
-    }
-
-    -past {
+      width: calc(2 * var(--dot-radius) - 2 * var(--dot-border))
+      height: calc(2 * var(--dot-radius) - 2 * var(--dot-border))
+      border: var(--dot-border) solid #fff
+      border-radius: calc(2 * var(--dot-radius))
     }
 
     -attending {
       div.dot {
         background: #fff
-        width: 6px
-        height: 6px
+        width: calc(2 * var(--dot-radius))
+        height: calc(2 * var(--dot-radius))
         border: none
       }
     }

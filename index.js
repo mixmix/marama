@@ -1,29 +1,42 @@
 const h = require('mutant/h')
+const DayTile = require('./day-tile')
+const DayLabel = require('./day-label')
+const getDay = require('./lib/get-day')
 
 const MONTH_NAMES = [ 'Ja', 'Fe', 'Ma', 'Ap', 'Ma', 'Ju', 'Ju', 'Au', 'Se', 'Oc', 'No', 'De' ]
 const DAYS = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ]
+const DEFAULT_FORMAT = 'rows'
 
 module.exports = function Marama (opts = {}) {
-  const d = startOfDay()
+  const day = opts.today || startOfDay()
   const {
-    year = d.getFullYear(),
-    month = d.getMonth() + 1, // month number (common defn)
-    today = d,
     events = [],
+    month = day.getMonth() + 1, // month number (common defn)
+    year = day.getFullYear(),
+    monthNames = MONTH_NAMES,
     range,
     setRange = () => {},
-    monthNames = MONTH_NAMES
+    styles = {},
+    today = day
   } = opts
+  if (opts.style) console.error('Marama: you have passed in **style** instead of styles!')
 
   const monthIndex = month - 1 // month number (Date API defn)
   const monthLength = new Date(year, monthIndex + 1, 0).getDate()
   // NOTE Date takes month as a monthIndex i.e. april = 3
   // and day = 0 goes back a day
   const days = Array(monthLength).fill().map((_, i) => i + 1)
-
-  var weekday
-  var week
-  const offset = getDay(new Date(year, monthIndex, 1)) - 1
+  const dayOpts = {
+    events,
+    year,
+    monthIndex,
+    // day TBD
+    today,
+    offset: getDay(new Date(year, monthIndex, 1)) - 1, // how far into the week the month starts
+    weekFormat: getWeekFormat(styles),
+    range,
+    setRange
+  }
 
   const setMonthRange = (ev) => {
     setRange({
@@ -33,95 +46,43 @@ module.exports = function Marama (opts = {}) {
   }
 
   return h('Marama', [
-    h('div.month-name', { 'ev-click': setMonthRange }, monthNames[monthIndex]),
-    h('div.days',
-      {
-        style: { display: 'grid' }
-      },
-      [
-        DAYS.map((day, i) => DayName(day, i)),
-        days.map(Day)
-      ]
-    )
-  ])
-
-  function Day (day) {
-    const date = new Date(year, monthIndex, day)
-    const dateEnd = new Date(year, monthIndex, day + 1)
-    weekday = getDay(date)
-    week = Math.ceil((day + offset) / 7)
-
-    const eventsOnDay = events.filter(e => {
-      return e.date >= date && e.date < dateEnd
-    })
-
-    const attending = eventsOnDay.some(e => {
-      return e.data.attending
-    })
-
-    const opts = {
-      attributes: {
-        'title': `${year}-${month}-${day}`,
-        'data-date': `${year}-${month}-${day}`
-      },
-      style: {
-        'grid-row': `${weekday} / ${weekday + 1}`,
-        'grid-column': `${week + 1} / ${week + 2}`
-        // column moved by 1 to make space for labels
-      },
-      classList: [
-        date < today ? '-past' : '-future',
-        eventsOnDay.length ? '-events' : '',
-        inRange(date) ? '-range' : '',
-        attending ? '-attending' : ''
-      ],
-      'ev-click': (ev) => {
-        if (ev.shiftKey) {
-          dateEnd >= range.lt
-            ? setRange({ lt: dateEnd })
-            : setRange({ gte: date })
-          return
-        }
-
-        setRange({
-          gte: date,
-          lt: dateEnd
-        })
-      }
-    }
-
-    if (!eventsOnDay.length) return h('MaramaDayTile', opts)
-
-    return h('MaramaDayTile', opts, [
-      // TODO add awareness of whether I'm going to events
-      // TODO try a FontAwesome circle
-      h('div.dot', [
-        // Math.random() > 0.3 ? h('div') : ''
-      ])
+    // h('div.month-name', { 'ev-click': setMonthRange }, monthNames[monthIndex]),
+    h('div.days', { style: getStyles(styles) }, [
+      DAYS.map((day, i) => DayLabel(day, i, dayOpts.weekFormat)),
+      days.map(day => {
+        dayOpts.day = day // note we're mutating this object (might save memory?)
+        return DayTile(dayOpts)
+      })
     ])
-  }
-
-  function inRange (date) {
-    if (!range || (!range.gte && !range.lt)) return false
-    return (date >= range.gte) && (date < range.lt)
-  }
+  ])
 }
 
-function DayName (day, index) {
-  return h('MaramaDayName', {
-    style: {
-      'grid-row': `${index + 1} / ${index + 2}`,
-      'grid-column': '1 / 2'
-    }
-  }, day.substr(0, 1))
+function getStyles (styles = {}) {
+  const {
+    tileRadius = 6,
+    tileGap = 1,
+    dotRadius,
+    dotBorder = 1
+  } = styles
+  const format = getWeekFormat(styles)
+
+  const _styles = {
+    '--tile-radius': `${tileRadius}px`,
+    '--tile-gap': `${tileGap}px`,
+    '--dot-radius': `${dotRadius || Math.floor(tileRadius / 2)}px`,
+    '--dot-border': `${dotBorder}px`,
+    display: 'grid',
+    [`grid-template-${format}`]: '2 * calc(var(--tile-radius) + 2 * var(--tile-gap)) repeat(6, calc(2 * var(--tile-radius)))'
+  }
+
+  return _styles
 }
 
-function getDay (date) {
-  const dayIndex = date.getDay()
-  return dayIndex === 0 ? 7 : dayIndex
-
-  // Weeks run 0...6 (Sun - Sat)
-  // this shifts those days around by 1
+function getWeekFormat (styles) {
+  if (styles.weekFormat && !['rows', 'columns'].includes(styles.weekFormat)) {
+    throw new Error('marama styles.weekFormat must be either "rows" or "columns"')
+  }
+  return styles.weekFormat || DEFAULT_FORMAT
 }
 
 function startOfDay (d = new Date()) {

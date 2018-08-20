@@ -1,0 +1,12 @@
+MaramaDayLabel {
+  color: hsl(0, 0%, 40%)
+  font-family: arial
+  font-size: calc(2 * var(--tile-radius) - 4px)
+
+  width: calc(2 * var(--tile-radius))
+  height: calc(2 * var(--tile-radius))
+
+  display: flex
+  align-items: center
+  justify-content: center
+}
