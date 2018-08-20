@@ -3,7 +3,6 @@ const DayTile = require('./day-tile')
 const DayLabel = require('./day-label')
 const getDay = require('./lib/get-day')
 
-const MONTH_NAMES = [ 'Ja', 'Fe', 'Ma', 'Ap', 'Ma', 'Ju', 'Ju', 'Au', 'Se', 'Oc', 'No', 'De' ]
 const DAYS = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ]
 const DEFAULT_FORMAT = 'rows'
 
@@ -13,7 +12,6 @@ module.exports = function Marama (opts = {}) {
     events = [],
     month = day.getMonth() + 1, // month number (common defn)
     year = day.getFullYear(),
-    monthNames = MONTH_NAMES,
     range,
     setRange = () => {},
     styles = {},
@@ -38,15 +36,7 @@ module.exports = function Marama (opts = {}) {
     setRange
   }
 
-  const setMonthRange = (ev) => {
-    setRange({
-      gte: new Date(year, monthIndex, 1),
-      lt: new Date(year, monthIndex + 1, 1)
-    })
-  }
-
   return h('Marama', [
-    // h('div.month-name', { 'ev-click': setMonthRange }, monthNames[monthIndex]),
     h('div.days', { style: getStyles(styles) }, [
       DAYS.map((day, i) => DayLabel(day, i, dayOpts.weekFormat)),
       days.map(day => {

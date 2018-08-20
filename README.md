@@ -39,7 +39,6 @@ Marama can take the following options:
   month,   // month number (by common defn, e.g. 4 is April)
   events      // (optional) an Array of form: [{ date: Date, data: { ... } }]
   year,       // (optional) defaults to current year
-  monthNames, // (optional) an Array of month names
   range,      // (optional) an Object of form { gte: Date, lt: Date } to highlight
   setRange,   // (optional) a callback which receives a range on clicks { gte, lt } 
   styles,     // (optional) Object, _see below_
