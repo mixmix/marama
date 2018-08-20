@@ -9,6 +9,8 @@ MaramaDayTile {
   justify-content: center
   align-items: center
 
+  font-family: sans
+
   -past {
     background: hsl(0, 0%, 20%)
   }

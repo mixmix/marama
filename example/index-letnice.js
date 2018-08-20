@@ -1,5 +1,5 @@
 // run this from the terminal using :
-// npx electro test/index-classic-cal.js
+// npx electro example/index-letnice.js
 
 const { h } = require('mutant')
 
@@ -21,9 +21,7 @@ const marama = Marama({
     lt: new Date(2018, 6, 23)
   },
   styles: {
-    weekFormat: 'rows',
-    tileRadius: 18,
-    tileGap: 4
+    weekFormat: 'columns'
   }
 })
 

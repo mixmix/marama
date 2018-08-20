@@ -32,6 +32,7 @@ module.exports = function Marama (opts = {}) {
     today,
     offset: getDay(new Date(year, monthIndex, 1)) - 1, // how far into the week the month starts
     weekFormat: getWeekFormat(styles),
+    showNumbers: Boolean(styles.showNumbers),
     range,
     setRange
   }

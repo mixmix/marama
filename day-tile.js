@@ -1,7 +1,7 @@
 const h = require('mutant/h')
 const getDay = require('./lib/get-day')
 
-module.exports = function Day ({ today, year, monthIndex, day, offset, weekFormat, events, range, setRange }) {
+module.exports = function Day ({ today, year, monthIndex, day, offset, weekFormat, showNumbers, events, range, setRange }) {
   const date = new Date(year, monthIndex, day)
   const dateEnd = new Date(year, monthIndex, day + 1)
   const weekday = getDay(date)
@@ -41,14 +41,10 @@ module.exports = function Day ({ today, year, monthIndex, day, offset, weekForma
     'ev-click': handleRangeSetting
   }
 
-  if (!eventsOnDay.length) return h('MaramaDayTile', opts)
-
   return h('MaramaDayTile', opts, [
-    // TODO add awareness of whether I'm going to events
-    // TODO try a FontAwesome circle
-    h('div.dot', [
-      // Math.random() > 0.3 ? h('div') : ''
-    ])
+    showNumbers
+      ? day : !eventsOnDay.length
+        ? h('div.dot') : ''
   ])
 
   function handleRangeSetting (ev) {
