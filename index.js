@@ -37,14 +37,12 @@ module.exports = function Marama (opts = {}) {
     onSelect
   }
 
-  return h('div.Marama', [
-    h('div.days', { style: getStyles(styles) }, [
-      DAYS.map((day, i) => DayLabel(day, i, dayOpts.weekFormat)),
-      days.map(day => {
-        dayOpts.day = day // note we're mutating this object (might save memory?)
-        return DayTile(dayOpts)
-      })
-    ])
+  return h('div.Marama', { style: getStyles(styles) }, [
+    DAYS.map((day, i) => DayLabel(day, i, dayOpts.weekFormat)),
+    days.map(day => {
+      dayOpts.day = day // note we're mutating this object (might save memory?)
+      return DayTile(dayOpts)
+    })
   ])
 }
 
@@ -56,14 +54,16 @@ function getStyles (styles = {}) {
     dotBorder = 1
   } = styles
   const format = getWeekFormat(styles)
+  const transFormat = ['rows', 'columns'].find(f => f !== format)
 
   const _styles = {
-    '--tile-radius': `${tileRadius}px`,
+    '--tile-width': `${2 * tileRadius}px`,
     '--tile-gap': `${tileGap}px`,
-    '--dot-radius': `${dotRadius || Math.floor(tileRadius / 2)}px`,
+    '--dot-width': `${2 * dotRadius || tileRadius}px`,
     '--dot-border': `${dotBorder}px`,
     display: 'grid',
-    [`grid-template-${format}`]: '2 * calc(var(--tile-radius) + 2 * var(--tile-gap)) repeat(6, calc(2 * var(--tile-radius)))'
+    [`grid-template-${format}`]: 'calc(var(--tile-width) + 2 * var(--tile-gap)) repeat(6, var(--tile-width))',
+    [`grid-template-${transFormat}`]: 'repeat(7, var(--tile-width))'
   }
 
   return _styles

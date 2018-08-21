@@ -1,9 +1,7 @@
 Marama {
-  div.days {
-    grid-gap: var(--tile-gap)
-    justify-content: start
-    align-content: start
+  grid-gap: var(--tile-gap)
+  justify-content: start
+  align-content: start
 
-    div.MaramaDay {}
-  }
+  div.MaramaDay {}
 }

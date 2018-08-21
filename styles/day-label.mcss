@@ -1,10 +1,10 @@
 MaramaDayLabel {
   color: hsl(0, 0%, 40%)
   font-family: arial
-  font-size: calc(2 * var(--tile-radius) - 4px)
+  font-size: calc(var(--tile-width) - 4px)
 
-  width: calc(2 * var(--tile-radius))
-  height: calc(2 * var(--tile-radius))
+  width: var(--tile-width)
+  height: var(--tile-width)
 
   display: flex
   align-items: center

@@ -1,6 +1,6 @@
 MaramaDayTile {
-  width: calc(2 * var(--tile-radius))
-  height: calc(2 * var(--tile-radius))
+  width: var(--tile-width)
+  height: var(--tile-width)
   cursor: pointer
 
   border-radius: 2px
@@ -30,17 +30,17 @@ MaramaDayTile {
   -events {
     div.dot {
       background: none
-      width: calc(2 * var(--dot-radius) - 2 * var(--dot-border))
-      height: calc(2 * var(--dot-radius) - 2 * var(--dot-border))
+      width: calc(var(--dot-width) - 2 * var(--dot-border))
+      height: calc(var(--dot-width) - 2 * var(--dot-border))
       border: var(--dot-border) solid #fff
-      border-radius: calc(2 * var(--dot-radius))
+      border-radius: var(--dot-width)
     }
 
     -attending {
       div.dot {
         background: #fff
-        width: calc(2 * var(--dot-radius))
-        height: calc(2 * var(--dot-radius))
+        width: var(--dot-width)
+        height: var(--dot-width)
         border: none
       }
     }
