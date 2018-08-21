@@ -11,5 +11,5 @@ module.exports = function DayLabel (day, index, weekFormat) {
       'grid-column': '1 / 2'
     }
 
-  return h('MaramaDayLabel', { style }, day.substr(0, 1))
+  return h('div.MaramaDayLabel', { style }, day.substr(0, 1))
 }

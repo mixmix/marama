@@ -12,8 +12,8 @@ module.exports = function Marama (opts = {}) {
     events = [],
     month = day.getMonth() + 1, // month number (common defn)
     year = day.getFullYear(),
-    range,
-    setRange = () => {},
+    range = null,
+    onSelect = () => {},
     styles = {},
     today = day
   } = opts
@@ -34,10 +34,10 @@ module.exports = function Marama (opts = {}) {
     weekFormat: getWeekFormat(styles),
     showNumbers: Boolean(styles.showNumbers),
     range,
-    setRange
+    onSelect
   }
 
-  return h('Marama', [
+  return h('div.Marama', [
     h('div.days', { style: getStyles(styles) }, [
       DAYS.map((day, i) => DayLabel(day, i, dayOpts.weekFormat)),
       days.map(day => {

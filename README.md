@@ -32,19 +32,34 @@ document.body.appendChild(marama)
 
 ## API
 
-Marama can take the following options:
+Marama can take the following opts (all optional):
 
 ```js
 {
-  month,   // month number (by common defn, e.g. 4 is April)
-  events      // (optional) an Array of form: [{ date: Date, data: { ... } }]
-  year,       // (optional) defaults to current year
-  range,      // (optional) an Object of form { gte: Date, lt: Date } to highlight
-  setRange,   // (optional) a callback which receives a range on clicks { gte, lt } 
-  styles,     // (optional) Object, _see below_
-  today       // (optional) a Date which can be used to over-ride the definition of today
+  events    // an Array of form: [{ date: Date, data: { ... } }]     (default: [])
+  month,    // month number, by common defn e.g. 4 = April           (default: current month)
+  year,     // year we're in                                         (default: current year)
+  today     // a Date which can be used to over-ride the definition of today
+  range,    // a range to highlight, expects Object of form { gte: Date, lt: Date } (default: null}
+  onSelect, // a callback function _see below_
+  styles,   // Object, _see below_
 }
 ```
+
+**Note** that if `today` is set, the "current month" and "current year" defaults will be based on this.
+
+### `onSelect`
+
+A function that is called with data of the form : `{ gte: Date, lt: Date, events: Array }`, where:
+  - `events` is an Array of all events in the range between `gte` and `lt`
+  - `gte` and `lte` are the lower and upper bounds of a range defined by what you clicked on
+
+**Note** the window of time for a left-click is 1 day wide, but marama also listens for a _shift-click_.
+A shift-click takes any currently defined `range` and stretches it out to the point you've shift-clicked.
+By managing state outside of marama, it's possible to make some nice interactive featureswith this.
+
+
+### `styles`
 
 The `styles` option can be used to change how Marama looks programmatically
 

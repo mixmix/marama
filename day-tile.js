@@ -1,16 +1,13 @@
 const h = require('mutant/h')
 const getDay = require('./lib/get-day')
 
-module.exports = function Day ({ today, year, monthIndex, day, offset, weekFormat, showNumbers, events, range, setRange }) {
+module.exports = function Day ({ today, year, monthIndex, day, offset, weekFormat, showNumbers, events, range, onSelect }) {
   const date = new Date(year, monthIndex, day)
   const dateEnd = new Date(year, monthIndex, day + 1)
   const weekday = getDay(date)
   const week = Math.ceil((day + offset) / 7)
 
-  const eventsOnDay = events.filter(e => {
-    return e.date >= date && e.date < dateEnd
-  })
-
+  const eventsOnDay = eventsInRange({gte: date, lt: dateEnd})
   const attending = eventsOnDay.some(e => {
     return e.data.attending
   })
@@ -27,10 +24,6 @@ module.exports = function Day ({ today, year, monthIndex, day, offset, weekForma
     }
 
   const opts = {
-    attributes: {
-      'title': `${year}-${monthIndex + 1}-${day}`,
-      'data-date': `${year}-${monthIndex + 1}-${day}`
-    },
     style,
     classList: [
       date < today ? '-past' : '-future',
@@ -38,31 +31,52 @@ module.exports = function Day ({ today, year, monthIndex, day, offset, weekForma
       inRange(range, date) ? '-range' : '',
       attending ? '-attending' : ''
     ],
-    'ev-click': handleRangeSetting
+    attributes: {
+      'title': `${year}-${monthIndex + 1}-${day}`,
+      'data-date': `${year}-${monthIndex + 1}-${day}`
+    }
   }
+  if (onSelect) opts['ev-click'] = handleSelect
 
-  return h('MaramaDayTile', opts, [
+  return h('div.MaramaDayTile', opts, [
     showNumbers
-      ? day : !eventsOnDay.length
+      ? day : eventsOnDay.length
         ? h('div.dot') : ''
   ])
 
-  function handleRangeSetting (ev) {
-    if (ev.shiftKey && range && range.lt) {
-      dateEnd >= range.lt
-        ? setRange({ lt: dateEnd })
-        : setRange({ gte: date })
-      return
+  /// helpers
+
+  function eventsInRange (range) {
+    return events.filter(e => inRange(range, e.date))
+  }
+
+  function handleSelect (ev) {
+    if (ev.shiftKey && validRange(range)) {
+      const newRange = dateEnd >= range.lt
+        ? { gte: range.gte, lt: dateEnd }
+        : { gte: date, lt: range.lt }
+      newRange.events = eventsInRange(newRange)
+
+      return onSelect(newRange)
     }
 
-    setRange({
+    return onSelect({
       gte: date,
-      lt: dateEnd
+      lt: dateEnd,
+      events: eventsOnDay
     })
   }
 }
 
 function inRange (range, date) {
-  if (!range || (!range.gte && !range.lt)) return false
+  if (!validRange(range)) return false
   return (date >= range.gte) && (date < range.lt)
+}
+
+function validRange (range) {
+  if (!range) return false
+  if (!(range.gte instanceof Date)) return false
+  if (!(range.lt instanceof Date)) return false
+
+  return true
 }

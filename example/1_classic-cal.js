@@ -1,5 +1,5 @@
 // run this from the terminal using :
-// npx electro example/index-classic-cal.js
+// npx electro example/1_classic-cal.js
 
 const { h } = require('mutant')
 const compile = require('micro-css')

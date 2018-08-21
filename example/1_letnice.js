@@ -1,5 +1,5 @@
 // run this from the terminal using :
-// npx electro example/index-letnice.js
+// npx electro example/1_letnice.js
 
 const { h } = require('mutant')
 
