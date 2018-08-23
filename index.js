@@ -10,7 +10,7 @@ module.exports = function Marama (opts = {}) {
   const day = opts.today || startOfDay()
   const {
     events = [],
-    month = day.getMonth() + 1, // month number (common defn)
+    monthIndex = day.getMonth(),
     year = day.getFullYear(),
     range = null,
     onSelect = () => {},
@@ -19,7 +19,6 @@ module.exports = function Marama (opts = {}) {
   } = opts
   if (opts.style) console.error('Marama: you have passed in **style** instead of styles!')
 
-  const monthIndex = month - 1 // month number (Date API defn)
   const monthLength = new Date(year, monthIndex + 1, 0).getDate()
   // NOTE Date takes month as a monthIndex i.e. april = 3
   // and day = 0 goes back a day

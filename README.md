@@ -36,15 +36,17 @@ Marama can take the following opts (all optional):
 
 ```js
 {
-  events    // an Array of form: [{ date: Date, data: { ... } }]     (default: [])
-  month,    // month number, by common defn e.g. 4 = April           (default: current month)
-  year,     // year we're in                                         (default: current year)
-  today     // a Date which can be used to over-ride the definition of today
-  range,    // a range to highlight, expects Object of form { gte: Date, lt: Date } (default: null}
-  onSelect, // a callback function _see below_
-  styles,   // Object, _see below_
+  events      // an Array of form: [Event, Event, ... ]  (default: [])
+  monthIndex, // month by index e.g. 3 = April                      (default: current month)
+  year,       // year we're in                                      (default: current year)
+  today       // a Date which can be used to over-ride the definition of today
+  range,      // a range to highlight, expects Object of form { gte: Date, lt: Date } (default: null}
+  onSelect,   // a callback function _see below_
+  styles,     // Object, _see below_
 }
 ```
+
+An `Event` is an object with form `{ date: Date, data: { attending: Boolean, ... } }`
 
 **Note** that if `today` is set, the "current month" and "current year" defaults will be based on this.
 

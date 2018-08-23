@@ -71,7 +71,6 @@ function onSelect ({ gte, lt, events }) {
 
 document.body.appendChild(page)
 
-
 // styles
 
 require('../lib/styles-inject')()
